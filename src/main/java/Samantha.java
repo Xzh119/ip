@@ -41,23 +41,32 @@ public class Samantha {
                 String description = userCommand.substring(5);
                 tasks[taskSum] = new Todo(description);
                 taskSum++;
+
+                System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
                 System.out.println("      " + tasks[taskSum - 1]);
                 System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("deadline ")) {
                 String[] parts = userCommand.substring(9).split(" /by ");
                 tasks[taskSum] = new Deadline(parts[0], parts[1]);
                 taskSum++;
+
+                System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
                 System.out.println("      " + tasks[taskSum - 1]);
                 System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("event ")) {
                 String[] parts = userCommand.substring(6).split(" /from | /to ");
                 tasks[taskSum] = new Event(parts[0], parts[1], parts[2]);
                 taskSum++;
+
+                System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
                 System.out.println("      " + tasks[taskSum - 1]);
                 System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                System.out.println("____________________________________________________________");
             } else {
                 if (taskSum > 99) {
                     System.out.println("    List is full.");
