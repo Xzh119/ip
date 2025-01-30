@@ -1,12 +1,12 @@
 import java.util.Scanner;
-
+import java.util.ArrayList;
 public class Samantha {
     public static void main(String[] args) throws SamanthaException {
         System.out.println("____________________________________________________________");
         System.out.println("    Hello! I'm Samantha");
         System.out.println("    What can I do for you?");
         System.out.println("____________________________________________________________");
-        Task[] tasks = new Task[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         int taskSum = 0;
         Scanner scanner = new Scanner(System.in);
         String userCommand = scanner.nextLine();
@@ -18,7 +18,7 @@ public class Samantha {
                 }
                 System.out.println("    Here are the tasks in your list:");
                 for (int i = 1; i <= taskSum; i++) {
-                    System.out.println("    " + i + ". " + tasks[i-1]);
+                    System.out.println("    " + i + ". " + tasks.get(i-1));
                 }
                 System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("mark ")) {
@@ -27,10 +27,10 @@ public class Samantha {
                     if (taskIndex - 1 < 0 || taskIndex - 1 >= taskSum) {
                         throw new SamanthaException("Invalid task number.");
                     }
-                    tasks[taskIndex - 1].markAsDone();
+                    tasks.get(taskIndex - 1).markAsDone();
                     System.out.println("____________________________________________________________");
                     System.out.println("    Nice! I've marked this task as done:");
-                    System.out.println("       " + tasks[taskIndex - 1].toString());
+                    System.out.println("       " + tasks.get(taskIndex - 1).toString());
                     System.out.println("____________________________________________________________");
                 } catch (Exception e) {
                     throw new SamanthaException("Please enter a valid task number. Example: `mark 2`");
@@ -42,13 +42,31 @@ public class Samantha {
                     if (taskIndex - 1 < 0 || taskIndex - 1 >= taskSum) {
                         throw new SamanthaException("Invalid task number.");
                     }
-                    tasks[taskIndex - 1].markAsUndone();
+                    tasks.get(taskIndex - 1).markAsUndone();
                     System.out.println("____________________________________________________________");
                     System.out.println("    OK, I've marked this task as not done yet:");
-                    System.out.println("       " + tasks[taskIndex - 1].toString());
+                    System.out.println("       " + tasks.get(taskIndex - 1).toString());
                     System.out.println("____________________________________________________________" );
                 } catch (Exception e) {
                     throw new SamanthaException("Please enter a valid task number. Example: `unmark 2`");
+                }
+            } else if (userCommand.startsWith("delete ")) {
+                try {
+                    int taskIndex = Integer.parseInt(userCommand.substring(7)) ;
+                    if (taskIndex - 1 < 0 || taskIndex - 1 >= taskSum) {
+                        throw new SamanthaException("Invalid task number.");
+                    }
+
+                    Task removedTask = tasks.remove(taskIndex - 1);
+                    taskSum--;
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("    Noted. I've removed this task:");
+                    System.out.println("      " + removedTask);
+                    System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                    System.out.println("____________________________________________________________");
+                } catch (NumberFormatException e) {
+                    throw new SamanthaException("Please provide a valid task number. Example: `delete 2`");
                 }
             } else if (userCommand.startsWith("todo ")) {
                 if (userCommand.length() <= 5) {
@@ -59,12 +77,12 @@ public class Samantha {
                 }
 
                 String description = userCommand.substring(5);
-                tasks[taskSum] = new Todo(description);
+                tasks.add(taskSum, new Todo(description));
                 taskSum++;
 
                 System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
-                System.out.println("      " + tasks[taskSum - 1]);
+                System.out.println("      " + tasks.get(taskSum - 1));
                 System.out.println("    Now you have " + taskSum + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("deadline ")) {
@@ -76,12 +94,12 @@ public class Samantha {
                 }
 
                 String[] parts = userCommand.substring(9).split(" /by ");
-                tasks[taskSum] = new Deadline(parts[0], parts[1]);
+                tasks.add(taskSum, new Deadline(parts[0], parts[1]));
                 taskSum++;
 
                 System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
-                System.out.println("      " + tasks[taskSum - 1]);
+                System.out.println("      " + tasks.get(taskSum - 1));
                 System.out.println("    Now you have " + taskSum + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("event ")) {
@@ -93,19 +111,19 @@ public class Samantha {
                 }
 
                 String[] parts = userCommand.substring(6).split(" /from | /to ");
-                tasks[taskSum] = new Event(parts[0], parts[1], parts[2]);
+                tasks.add(taskSum, new Event(parts[0], parts[1], parts[2]));
                 taskSum++;
 
                 System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
-                System.out.println("      " + tasks[taskSum - 1]);
+                System.out.println("      " + tasks.get(taskSum - 1));
                 System.out.println("    Now you have " + taskSum + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else {
                 if (taskSum > 99) {
                     System.out.println("    List is full.");
                 }else {
-                    tasks[taskSum] = new Task(userCommand);
+                    tasks.add(taskSum , new Task(userCommand));
                     taskSum++;
                     System.out.println("____________________________________________________________");
                     System.out.println("    added: " + userCommand);
