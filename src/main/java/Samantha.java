@@ -1,33 +1,37 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Samantha {
+    private static final String FILE_PATH = "./data/samantha.txt";
     public static void main(String[] args) throws SamanthaException {
         System.out.println("____________________________________________________________");
         System.out.println("    Hello! I'm Samantha");
         System.out.println("    What can I do for you?");
         System.out.println("____________________________________________________________");
-        ArrayList<Task> tasks = new ArrayList<>();
-        int taskSum = 0;
+
+        ArrayList<Task> tasks = Storage.loadTasks(FILE_PATH);
+
         Scanner scanner = new Scanner(System.in);
         String userCommand = scanner.nextLine();
         while (!userCommand.equals("bye")) {
             if (userCommand.equals("list")) {
                 System.out.println("____________________________________________________________");
-                if (taskSum == 0) {
+                if (tasks.isEmpty()) {
                     System.out.println("    List is empty.");
                 }
                 System.out.println("    Here are the tasks in your list:");
-                for (int i = 1; i <= taskSum; i++) {
+                for (int i = 1; i <= tasks.size(); i++) {
                     System.out.println("    " + i + ". " + tasks.get(i-1));
                 }
                 System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("mark ")) {
                 try {
                     int taskIndex = Integer.parseInt(userCommand.substring(5));
-                    if (taskIndex - 1 < 0 || taskIndex - 1 >= taskSum) {
+                    if (taskIndex - 1 < 0 || taskIndex - 1 >= tasks.size()) {
                         throw new SamanthaException("Invalid task number.");
                     }
                     tasks.get(taskIndex - 1).markAsDone();
+                    //
+                    Storage.saveTasks(FILE_PATH, tasks);
                     System.out.println("____________________________________________________________");
                     System.out.println("    Nice! I've marked this task as done:");
                     System.out.println("       " + tasks.get(taskIndex - 1).toString());
@@ -39,10 +43,12 @@ public class Samantha {
             } else if (userCommand.startsWith("unmark ")) {
                 try {
                     int taskIndex = Integer.parseInt(userCommand.substring(7));
-                    if (taskIndex - 1 < 0 || taskIndex - 1 >= taskSum) {
+                    if (taskIndex - 1 < 0 || taskIndex - 1 >= tasks.size()) {
                         throw new SamanthaException("Invalid task number.");
                     }
                     tasks.get(taskIndex - 1).markAsUndone();
+                    //
+                    Storage.saveTasks(FILE_PATH, tasks);
                     System.out.println("____________________________________________________________");
                     System.out.println("    OK, I've marked this task as not done yet:");
                     System.out.println("       " + tasks.get(taskIndex - 1).toString());
@@ -53,17 +59,18 @@ public class Samantha {
             } else if (userCommand.startsWith("delete ")) {
                 try {
                     int taskIndex = Integer.parseInt(userCommand.substring(7)) ;
-                    if (taskIndex - 1 < 0 || taskIndex - 1 >= taskSum) {
+                    if (taskIndex - 1 < 0 || taskIndex - 1 >= tasks.size()) {
                         throw new SamanthaException("Invalid task number.");
                     }
 
                     Task removedTask = tasks.remove(taskIndex - 1);
-                    taskSum--;
-
+                    //taskSum--;
+                    //
+                    Storage.saveTasks(FILE_PATH, tasks);
                     System.out.println("____________________________________________________________");
                     System.out.println("    Noted. I've removed this task:");
                     System.out.println("      " + removedTask);
-                    System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                    System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } catch (NumberFormatException e) {
                     throw new SamanthaException("Please provide a valid task number. Example: `delete 2`");
@@ -72,59 +79,67 @@ public class Samantha {
                 if (userCommand.length() <= 5) {
                     throw new SamanthaException("Invalid Todo.");
                 }
-                if (taskSum >= 100) {
+                if (tasks.size() >= 100) {
                     throw new SamanthaException("Task list is full.");
                 }
 
                 String description = userCommand.substring(5);
-                tasks.add(taskSum, new Todo(description));
-                taskSum++;
+                Task task = new Todo(description);
+                tasks.add(task);
+
+                //
+                Storage.saveTasks(FILE_PATH, tasks);
 
                 System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
-                System.out.println("      " + tasks.get(taskSum - 1));
-                System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                System.out.println("      " + task);
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("deadline ")) {
                 if (!userCommand.contains(" /by ")) {
                     throw new SamanthaException("Invalid deadline.");
                 }
-                if (taskSum >= 100) {
+                if (tasks.size() >= 100) {
                     throw new SamanthaException("Task list is full.");
                 }
 
                 String[] parts = userCommand.substring(9).split(" /by ");
-                tasks.add(taskSum, new Deadline(parts[0], parts[1]));
-                taskSum++;
+                Deadline task = new Deadline(parts[0], parts[1]);
+                tasks.add(task);
+
+                Storage.saveTasks(FILE_PATH, tasks);
+
 
                 System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
-                System.out.println("      " + tasks.get(taskSum - 1));
-                System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                System.out.println("      " + task);
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else if (userCommand.startsWith("event ")) {
                 if (!userCommand.contains(" /from ") || !userCommand.contains(" /to ")) {
                     throw new SamanthaException("Invalid event.");
                 }
-                if (taskSum >= 100) {
+                if (tasks.size() >= 100) {
                     throw new SamanthaException("Task list is full.");
                 }
 
                 String[] parts = userCommand.substring(6).split(" /from | /to ");
-                tasks.add(taskSum, new Event(parts[0], parts[1], parts[2]));
-                taskSum++;
+                Task task = new Event(parts[0], parts[1], parts[2]);
+                tasks.add(task);
+
+                //
+                Storage.saveTasks(FILE_PATH, tasks);
 
                 System.out.println("____________________________________________________________");
                 System.out.println("    Got it. I've added this task:");
-                System.out.println("      " + tasks.get(taskSum - 1));
-                System.out.println("    Now you have " + taskSum + " tasks in the list.");
+                System.out.println("      " + task);
+                System.out.println("    Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             } else {
-                if (taskSum > 99) {
+                if (tasks.size() > 99) {
                     System.out.println("    List is full.");
                 }else {
-                    tasks.add(taskSum , new Task(userCommand));
-                    taskSum++;
+                    tasks.add(new Task(userCommand));
                     System.out.println("____________________________________________________________");
                     System.out.println("    added: " + userCommand);
                     System.out.println("____________________________________________________________");

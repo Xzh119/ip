@@ -19,6 +19,26 @@ public class Task {
         this.isDone = false;
     }
 
+    public String toSaveFormat() {
+        return description;
+    }
+    public static Task fromSaveFormat(String line) {
+        String[] parts = line.split(" \\| ");
+        String type = parts[0];
+
+        switch (type) {
+            case "T":
+                return Todo.fromSaveFormat(line);
+            case "D":
+                return Deadline.fromSaveFormat(line);
+            case "E":
+                return Event.fromSaveFormat(line);
+            default:
+                throw new IllegalArgumentException("Invalid task type in file");
+        }
+
+    }
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
