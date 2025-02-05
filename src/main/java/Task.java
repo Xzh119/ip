@@ -18,7 +18,7 @@ public class Task {
     public void markAsUndone() {
         this.isDone = false;
     }
-<<<<<<< HEAD
+
 
     public String toSaveFormat() {
         return description;
@@ -40,9 +40,7 @@ public class Task {
 
     }
 
-=======
-    // method to run
->>>>>>> master
+
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
