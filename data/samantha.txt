@@ -1,5 +1,5 @@
-T | 0 | a
+T | 1 | a
 E | 0 | project meeting | 2pm | 4pm
-D | 1 | return book | Sunday
 T | 0 | walk
 T | 0 | play
+D | 0 | return book | 2019-10-15
