@@ -1,3 +1,10 @@
+package samantha.main;
+import samantha.storage.Storage;
+import samantha.task.TaskList;
+import samantha.ui.Ui;
+import samantha.command.Parser;
+import samantha.exception.SamanthaException;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.LocalDate;

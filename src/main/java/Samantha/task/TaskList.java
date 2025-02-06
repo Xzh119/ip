@@ -1,3 +1,9 @@
+package samantha.task;
+
+
+import samantha.task.Task;
+import samantha.exception.SamanthaException;
+
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;

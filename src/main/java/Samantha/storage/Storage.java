@@ -1,3 +1,6 @@
+package samantha.storage;
+
+import samantha.task.Task;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;

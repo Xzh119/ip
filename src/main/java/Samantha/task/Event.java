@@ -1,3 +1,4 @@
+package samantha.task;
 public class Event extends Task {
     protected String from;
     protected String to;

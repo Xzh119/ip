@@ -1,3 +1,13 @@
+package samantha.command;
+
+import samantha.task.TaskList;
+import samantha.task.Todo;
+import samantha.task.Deadline;
+import samantha.task.Event;
+import samantha.task.Task;
+import samantha.ui.Ui;
+import samantha.exception.SamanthaException;
+
 public class Parser {
     public static void parseCommand(String command, TaskList tasks, Ui ui) throws SamanthaException {
         if (command.equals("list")) {

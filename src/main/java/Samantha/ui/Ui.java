@@ -1,3 +1,4 @@
+package samantha.ui;
 import java.util.Scanner;
 public class Ui {
     public void showWelcome() {
