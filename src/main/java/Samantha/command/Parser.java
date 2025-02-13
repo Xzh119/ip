@@ -8,7 +8,19 @@ import samantha.task.Task;
 import samantha.ui.Ui;
 import samantha.exception.SamanthaException;
 
+/**
+ * The Parser class is responsible for parsing user commands
+ * and executing the corresponding actions on the TaskList.
+ */
 public class Parser {
+    /**
+     * Parses the user input command and executes the corresponding action.
+     *
+     * @param command The user input command as a String.
+     * @param tasks The TaskList that stores all tasks.
+     * @param ui The UI instance for displaying messages.
+     * @throws SamanthaException If the command is invalid.
+     */
     public static void parseCommand(String command, TaskList tasks, Ui ui) throws SamanthaException {
         if (command.equals("list")) {
             ui.showMessage(tasks.listTasks());
