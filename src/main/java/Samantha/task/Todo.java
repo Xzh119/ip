@@ -28,7 +28,9 @@ public class Todo extends Task {
         String[] parts = line.split(" \\| ");
         boolean isDone = parts[1].equals("1");
         Todo task = new Todo(parts[2]);
-        if (isDone) task.markAsDone();
+        if (isDone) {
+            task.markAsDone();
+        }
         return task;
     }
     @Override

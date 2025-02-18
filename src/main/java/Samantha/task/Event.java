@@ -35,7 +35,9 @@ public class Event extends Task {
         String[] parts = line.split(" \\| ");
         boolean isDone = parts[1].equals("1"); //
         Event task = new Event(parts[2], parts[3], parts[4]);
-        if (isDone) task.markAsDone();
+        if (isDone) {
+            task.markAsDone();
+        }
         return task;
     }
 
