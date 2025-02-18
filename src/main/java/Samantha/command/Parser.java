@@ -47,6 +47,9 @@ public class Parser {
             String[] parts = command.substring(6).split(" /from | /to ");
             tasks.addTask(new Event(parts[0], parts[1], parts[2]));
             ui.showMessage("Got it. I've added this task:\n    " + tasks.getLastTask() + "\nNow you have " + tasks.getSize() + " tasks in the list.");
+        }  else if (command.startsWith("find ")) {
+            String keyword = command.substring(5).trim();
+            ui.showMessage(tasks.findTasks(keyword));
         } else {
             throw new SamanthaException("I don't know what that means.");
         }

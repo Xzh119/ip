@@ -81,6 +81,27 @@ public class TaskList {
     }
 
     /**
+     * Finds tasks that contain the specified keyword.
+     *
+     * @param keyword The keyword to search for.
+     * @return A string containing matching tasks.
+     */
+    public String findTasks(String keyword) {
+        ArrayList<String> matchingTasks = new ArrayList<>();
+        matchingTasks.add("Here are the matching tasks in your list:");
+
+        int count = 0;
+        for (Task task : tasks) {
+            if (task.toString().contains(keyword)) {
+                count++;
+                matchingTasks.add("    " + count + ". " + task);
+            }
+        }
+
+        return count == 0 ? "Fail to find matching tasks." : String.join("\n", matchingTasks);
+    }
+
+    /**
      * Retrieves a task by its index.
      *
      * @param index The index of the task.
