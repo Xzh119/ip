@@ -10,11 +10,20 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+/**
+ * Main class for running the Samantha task management system.
+ */
 public class Samantha {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Initializes the Samantha system.
+     *
+     * @param filePath The path of the file used for task storage.
+     */
     public Samantha(String filePath) {
         ui = new Ui();
         storage = new Storage();
@@ -26,6 +35,9 @@ public class Samantha {
         }
     }
 
+    /**
+     * Runs the main event loop for the Samantha system.
+     */
     public void run() {
         ui.showWelcome();
         Scanner scanner = new Scanner(System.in);
@@ -47,6 +59,11 @@ public class Samantha {
         scanner.close();
     }
 
+    /**
+     * The entry point of the Samantha application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         new Samantha("./data/samantha.txt").run();
     }
