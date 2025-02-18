@@ -22,7 +22,9 @@ public class Deadline extends Task {
         String[] parts = line.split(" \\| ");
         boolean isDone = parts[1].equals("1");
         Deadline task = new Deadline(parts[2], parts[3]);
-        if (isDone) task.markAsDone();
+        if (isDone) {
+            task.markAsDone();
+        }
         return task;
     }
 

@@ -29,14 +29,14 @@ public class Task {
         String type = parts[0];
 
         switch (type) {
-            case "T":
-                return Todo.fromSaveFormat(line);
-            case "D":
-                return Deadline.fromSaveFormat(line);
-            case "E":
-                return Event.fromSaveFormat(line);
-            default:
-                throw new IllegalArgumentException("Invalid task type in file");
+        case "T":
+            return Todo.fromSaveFormat(line);
+        case "D":
+            return Deadline.fromSaveFormat(line);
+        case "E":
+            return Event.fromSaveFormat(line);
+        default:
+            throw new IllegalArgumentException("Invalid task type in file");
         }
 
     }

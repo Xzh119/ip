@@ -28,7 +28,9 @@ public class Storage {
     public static ArrayList<Task> loadTasks(String filePath) {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
-        if (!file.exists()) return tasks;
+        if (!file.exists()) {
+            return tasks;
+        }
 
         try {
             Scanner scanner = new Scanner(file);
@@ -40,7 +42,9 @@ public class Storage {
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (line.isEmpty()) continue;
+                if (line.isEmpty()) {
+                    continue;
+                }
                 try {
                     tasks.add(Task.fromSaveFormat(line));
                 } catch (Exception e) {
