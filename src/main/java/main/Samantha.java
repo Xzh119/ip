@@ -15,8 +15,6 @@ import java.time.format.DateTimeFormatter;
  * Main class for running the Samantha task management system.
  */
 public class Samantha {
-    private static final String FILE_PATH = "./data/samantha.txt";
-    private static final String EXIT_COMMAND = "bye";
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -40,19 +38,21 @@ public class Samantha {
     /**
      * Runs the main event loop for the Samantha system.
      */
-    /**
-     * Runs the main event loop for the Samantha system.
-     */
     public void run() {
         ui.showWelcome();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String userCommand = ui.readCommand(scanner).trim();
-            if (EXIT_COMMAND.equalsIgnoreCase(userCommand)) {
+            String userCommand = ui.readCommand(scanner);
+            if (userCommand.equals("bye")) {
                 break;
             }
-            processCommand(userCommand);
+            try {
+                System.out.println(Parser.parseCommand(userCommand, tasks, ui));
+                storage.saveTasks("./data/samantha.txt", tasks.getTasks());
+            } catch (SamanthaException e) {
+                ui.showError(e.getMessage());
+            }
         }
 
         ui.showGoodbye();
@@ -60,28 +60,12 @@ public class Samantha {
     }
 
     /**
-     * Processes a single user command.
-     *
-     * @param userCommand The user input command.
-     */
-    private void processCommand(String userCommand) {
-        try {
-            String response = Parser.parseCommand(userCommand, tasks, ui);
-            System.out.println(response);
-            storage.saveTasks(FILE_PATH, tasks.getTasks());
-        } catch (SamanthaException e) {
-            ui.showError(e.getMessage());
-        }
-    }
-
-
-    /**
      * The entry point of the Samantha application.
      *
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
-        new Samantha(FILE_PATH).run();
+        new Samantha("./data/samantha.txt").run();
     }
 
     /**
@@ -89,7 +73,7 @@ public class Samantha {
      */
     public String getResponse(String input){
         try {
-            storage.saveTasks(FILE_PATH, tasks.getTasks());
+            storage.saveTasks("./data/samantha.txt", tasks.getTasks());
             return Parser.parseCommand(input, tasks, ui);
         } catch (SamanthaException e) {
             return "[ERROR] " + e.getMessage();
