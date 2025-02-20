@@ -22,6 +22,8 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
+    private static final String EXIT_COMMAND = "bye";
+    private static final String GREETING_MESSAGE = "Hi I'm Samantha!";
     private Samantha samantha;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/Phoneix.jpg"));
@@ -47,7 +49,7 @@ public class MainWindow extends AnchorPane {
      * Displays the greeting message.
      */
     private void greeting() {
-        String greetingMessage = "Hi I'm Samantha!";
+        String greetingMessage = GREETING_MESSAGE;
         dialogContainer.getChildren().add(
                 DialogBox.getSamanthaDialog(greetingMessage, samanthaImage)
         );
@@ -68,7 +70,7 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
 
-        if (input.equalsIgnoreCase("bye")) {
+        if (input.equalsIgnoreCase(EXIT_COMMAND)) {
             System.exit(0);
         }
     }
