@@ -81,7 +81,11 @@ public class Samantha {
      * @param args Command-line arguments.
      */
     public static void main(String[] args) {
-        new Samantha(FILE_PATH).run();
+        try {
+            new Samantha(FILE_PATH).run();
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Something went wrong");
+        }
     }
 
     /**

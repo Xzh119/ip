@@ -3,7 +3,11 @@ D | 0 | return book | 2022-12-12
 T | 0 | read book
 T | 1 | write book
 T | 0 | sleep
-T | 1 | play
-T | 0 | add task 7
-T | 0 | ass 
+T | 0 | play
+T | 1 | add task 7
+T | 1 | ass 
 T | 1 | play football
+E | 0 | project meeting | 2pm | 4pm
+E | 0 | project meeting | 2pm | 4pm
+D | 0 | return love | 2033-10-15
+D | 0 | return book | 2025-09-15
