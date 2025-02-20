@@ -18,7 +18,12 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
-        this.by = LocalDate.parse(by);
+        try {
+            this.by = LocalDate.parse(by);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid date format. Please use yyyy-MM-dd.");
+        }
+
     }
 
     @Override
