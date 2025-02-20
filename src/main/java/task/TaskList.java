@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Represents a list of tasks that can be modified by the user.
  */
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     /**
      * Creates a TaskList with an initial set of tasks.
