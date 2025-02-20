@@ -26,31 +26,36 @@ public class Parser {
             return ui.showMessage(tasks.listTasks());
         } else if (command.startsWith("mark ")) {
             int taskIndex = Integer.parseInt(command.substring(5)) - 1;
+            assert taskIndex >= 0 && taskIndex < tasks.getSize() : "Invalid task index";
             tasks.markTask(taskIndex, true);
             return ui.showMessage("Nice! I've marked this task as done:\n    " + tasks.getTask(taskIndex));
         } else if (command.startsWith("unmark ")) {
             int taskIndex = Integer.parseInt(command.substring(7)) - 1;
+            assert taskIndex >= 0 && taskIndex < tasks.getSize() : "Invalid task index";
             tasks.markTask(taskIndex, false);
-
             return ui.showMessage("OK, I've marked this task as not done yet:\n    " + tasks.getTask(taskIndex));
         } else if (command.startsWith("delete ")) {
             int taskIndex = Integer.parseInt(command.substring(7)) - 1;
+            assert taskIndex >= 0 && taskIndex < tasks.getSize() : "Invalid task index";
             Task removedTask = tasks.removeTask(taskIndex);
-
             return ui.showMessage("OK. I've removed this task:\n    " + removedTask + "\nNow you have " + tasks.getSize() + " tasks in the list.");
         } else if (command.startsWith("todo ")) {
+            assert command.length() > 5 : "Todo command must have a description";
             tasks.addTask(new Todo(command.substring(5)));
             return ui.showMessage("Got it. I've added this task:\n    " + tasks.getLastTask() + "\nNow you have " + tasks.getSize() + " tasks in the list.");
         } else if (command.startsWith("deadline ")) {
             String[] parts = command.substring(9).split(" /by ");
+            assert parts.length == 2 : "Deadline command format incorrect";
             tasks.addTask(new Deadline(parts[0], parts[1]));
             return ui.showMessage("Got it. I've added this task:\n    " + tasks.getLastTask() + "\nNow you have " + tasks.getSize() + " tasks in the list.");
         } else if (command.startsWith("event ")) {
             String[] parts = command.substring(6).split(" /from | /to ");
+            assert parts.length == 3 : "Event command format incorrect";
             tasks.addTask(new Event(parts[0], parts[1], parts[2]));
             return ui.showMessage("Got it. I've added this task:\n    " + tasks.getLastTask() + "\nNow you have " + tasks.getSize() + " tasks in the list.");
         }  else if (command.startsWith("find ")) {
             String keyword = command.substring(5).trim();
+            assert !keyword.isEmpty() : "Find command must have a keyword";
             return ui.showMessage(tasks.findTasks(keyword));
         } else {
             throw new SamanthaException("I don't know what that means.");
