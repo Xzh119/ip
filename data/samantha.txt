@@ -7,4 +7,3 @@ T | 1 | play
 T | 0 | add task 7
 T | 0 | ass 
 T | 1 | play football
-T | 0 | what am i
