@@ -73,11 +73,14 @@ public class TaskList {
         if (tasks.isEmpty()) {
             return "List is empty.";
         }
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        String[] taskArray = new String[tasks.size() + 1];
+        taskArray[0] = "Here are the tasks in your list:";
+
         for (int i = 0; i < tasks.size(); i++) {
-            sb.append("    ").append(i + 1).append(". ").append(tasks.get(i)).append("\n");
+            taskArray[i + 1] = "    " + (i + 1) + ". " + tasks.get(i);
         }
-        return sb.toString();
+
+        return String.join("\n", taskArray);
     }
 
     /**
