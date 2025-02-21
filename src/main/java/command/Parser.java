@@ -7,6 +7,7 @@ import task.Event;
 import task.Task;
 import ui.Ui;
 import exception.SamanthaException;
+import exception.CommandException;
 
 /**
  * The Parser class is responsible for parsing user commands
@@ -91,7 +92,7 @@ public class Parser {
             assert !keyword.isEmpty() : "Find command must have a keyword";
             return ui.showMessage(tasks.findTasks(keyword));
         } else {
-            throw new SamanthaException("I don't know what that means.");
+            throw new CommandException("Your command beyond my ability.");
         }
     }
 }
