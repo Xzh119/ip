@@ -40,9 +40,6 @@ public class Samantha {
     /**
      * Runs the main event loop for the Samantha system.
      */
-    /**
-     * Runs the main event loop for the Samantha system.
-     */
     public void run() {
         ui.showWelcome();
         Scanner scanner = new Scanner(System.in);

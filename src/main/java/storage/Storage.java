@@ -13,6 +13,7 @@ import java.util.Scanner;
  * Handles loading and saving tasks to a file.
  */
 public class Storage {
+
     /**
      * Saves the list of tasks to the specified file path.
      *
